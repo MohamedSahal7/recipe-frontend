@@ -1,3 +1,15 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import RecipeDetail from './pages/RecipeDetail'
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<RecipeDetail />} />
+        <Route path="/recipe/:id" element={<RecipeDetail />} />
+      </Routes>
+    </BrowserRouter>
+  )
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import RecipeForm from "./components/RecipeForm";
