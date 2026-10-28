@@ -1,50 +1,66 @@
+function Navbar() {
+  return (
+    <div className="bg-orange-500 text-white p-4 shadow-md">
+      <h1 className="text-xl font-bold">Recipe Manager</h1>
 import { useState } from "react";
-import ThemeToggle from "./ThemeToggle";
-import { useThemeStyles } from "../styles/useThemeStyles";
+import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const t = useThemeStyles();
+  const [open, setOpen] = useState(false);
+
+  const linkClass = ({ isActive }) =>
+    isActive
+      ? "font-bold border-b-2 border-white pb-1"
+      : "opacity-80 hover:opacity-100";
 
   return (
-    <header className={`w-full border-b ${t.border} ${t.background}`}>
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div className="bg-blue-600 text-white shadow-md">
+      {/* TOP BAR */}
+      <div className="flex justify-between items-center p-4">
+        <h1 className="text-xl font-bold">Recipe Manager</h1>
 
-        {/* LOGO */}
-        <div className={`text-xl font-bold ${t.text}`}>
-          Recipe<span className="text-orange-500">Hub</span>
-        </div>
+        {/* HAMBURGER BUTTON (MOBILE ONLY) */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? "✖" : "☰"}
+        </button>
 
-        {/* DESKTOP NAV */}
-        <nav className="hidden md:flex gap-6 text-sm font-medium">
-          <a className={`hover:text-orange-500 ${t.text}`} href="#">Home</a>
-          <a className={`hover:text-orange-500 ${t.text}`} href="#">Recipes</a>
-          <a className={`hover:text-orange-500 ${t.text}`} href="#">Categories</a>
-          <a className={`hover:text-orange-500 ${t.text}`} href="#">About</a>
-        </nav>
+        {/* DESKTOP MENU */}
+        <div className="hidden md:flex gap-6">
+          <NavLink to="/" className={linkClass}>
+            Home
+          </NavLink>
 
-        {/* RIGHT SIDE */}
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
+          <NavLink to="/create" className={linkClass}>
+            Create
+          </NavLink>
 
-          <button
-            className={`md:hidden text-2xl ${t.text}`}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            ☰
-          </button>
+          <NavLink to="/favorites" className={linkClass}>
+            Favorites
+          </NavLink>
         </div>
       </div>
 
       {/* MOBILE MENU */}
-      {menuOpen && (
-        <div className={`md:hidden px-4 pb-4 flex flex-col gap-3 border-t ${t.border} ${t.background}`}>
-          <a className={t.text} href="#">Home</a>
-          <a className={t.text} href="#">Recipes</a>
-          <a className={t.text} href="#">Categories</a>
-          <a className={t.text} href="#">About</a>
+      {open && (
+        <div className="md:hidden flex flex-col gap-4 px-4 pb-4">
+          <NavLink to="/" onClick={() => setOpen(false)} className={linkClass}>
+            Home
+          </NavLink>
+
+          <NavLink to="/create" onClick={() => setOpen(false)} className={linkClass}>
+            Create
+          </NavLink>
+
+          <NavLink to="/favorites" onClick={() => setOpen(false)} className={linkClass}>
+            Favorites
+          </NavLink>
         </div>
       )}
-    </header>
+    </div>
   );
 }
+
+export default Navbar;
