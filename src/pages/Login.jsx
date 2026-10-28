@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import  {useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login(){
@@ -18,14 +18,20 @@ function Login(){
             const formData = new URLSearchParams();
             formData.append("username", email);
             formData.append("password", password);
-            const response = await fetch("http://localhost:8000/api/auth/login",
+            console.log("Email field:", email);
+            console.log("Password field:", password);
+            console.log("Sending body:", formData.toString());
+            const response = await fetch("https://recipe-backend-30j8.onrender.com/auth/login",
              {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
                 },body: formData,});
       const data = await response.json();
-
+      
+      console.log("Response status:", response.status);
+      console.log("Response data:", data);
+      
       if (!response.ok) {
         throw new Error(
           data.detail || "Login failed"
@@ -33,7 +39,7 @@ function Login(){
       }
 
       localStorage.setItem("token", data.access_token);
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       setError(err.message);
     } 

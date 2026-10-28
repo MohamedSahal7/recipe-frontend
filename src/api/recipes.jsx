@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8002/recipes/";
+const BASE_URL = "https://recipe-backend-30j8.onrender.com/recipes/";
 
 export async function getRecipes() {
   const response = await fetch(BASE_URL);
